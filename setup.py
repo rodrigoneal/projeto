@@ -1,7 +1,7 @@
 import json
 
 
-def escrever_setup(valor: float, download: int, upload: int, operadora: str) -> None:
+def escrever_setup(valor: float, download: int, upload: int, operadora: str, game: bool) -> None:
     """
     Cria um arquivo Json com as informações da internet do usuario
     :param valor: Valor pago mensalmente pela internet
@@ -10,7 +10,7 @@ def escrever_setup(valor: float, download: int, upload: int, operadora: str) -> 
     :param operadora: nome da operadora de serviço
     """
     with open('setup.json', 'w') as setup:
-        status = {'internet': valor, 'download': download, 'upload': upload, 'operadora': operadora}
+        status = {'internet': valor, 'download': download, 'upload': upload, 'operadora': operadora, 'game': game}
         status = json.dumps(status)
         setup.write(status)
 
@@ -24,3 +24,7 @@ def ler_setup() -> dict:
     with open('setup.json', 'r') as setup:
         conf = json.load(setup)
         return (conf)
+
+escrever_setup(182.90, 30, 10, 'vigweb', True)
+a = ler_setup()
+print(a)
