@@ -72,3 +72,7 @@ class Core:
             else:
                 print("Verifique se você está conectado a alguma rede")
 
+
+if __name__ == '__main__':
+    core = perda_dados()
+    print(core)
