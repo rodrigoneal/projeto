@@ -12,6 +12,7 @@ class DbTest:
     def coluna(self, sql):
         self.lista.append(sql)
     def decorator(self, sql):
+        pass
 
     def mostrar(self):
         with open('sql/' + self.__table__, 'a+') as arquivo:
