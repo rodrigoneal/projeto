@@ -20,31 +20,31 @@ class Connect:
             print('Banco fechado')
 
 
-class Clientedb():
-    add = []
+class Banco:
 
     def __init__(self, db_name):
+        self.add = 0
         self.db_name = db_name
         self.db = Connect(db_name)
+        self.tabela_nome = ''
 
     def close_connection(self):
         self.db.close_db()
 
     def lista(self, args):
-        self.add.append(args)
-        self.add[-1].replace(',', '')
-        return self.add
+        self.add = args
 
     def criar_sql(self, tabela_nome) -> None:
+        self.tabela_nome = tabela_nome
         with open(f'sql/{tabela_nome}.sql', 'w') as arquivo:
-            arquivo.write(f'CREATE TABLE {tabela_nome}(')
+            arquivo.write(f'CREATE TABLE IF NOT EXISTS {tabela_nome}(\n')
             for i in self.add:
-                arquivo.write(f'\n{i}')
+                arquivo.write(f'{i}\n')
             arquivo.write('\n);')
 
-    def criar_schema(self, schema_path):
+    def criar_schema(self,):
         try:
-            with open(schema_path, 'rt') as sql:
+            with open(f'sql/{self.tabela_nome}.sql', 'rt') as sql:
                 schema = sql.read()
                 self.db.cursor.executescript(schema)
         except sqlite3.OperationalError:
@@ -52,17 +52,15 @@ class Clientedb():
 
 
 
-
 if __name__ == '__main__':
-    banco = Clientedb('teste')
-    id = 'id INT NOT NULL,'
-    nome = 'nome TEXT NOT NULL,'
-    idade = 'idade INT NOT NULL,'
-    cidade = 'cidade TEXT NOT NULL'
-    banco.lista(id)
-    banco.lista(nome)
-    banco.lista(idade)
-    banco.lista(cidade)
-    banco.criar_sql('tentando')
-    banco.criar_schema('sql/tentando.sql')
+    banco = Banco('db/registro')
+    tabela = ['dataqueda TEXT NOT NULL,',
+              'horaqueda TEXT NOT NULL,',
+              'datavolta TEXT NOT NULL,',
+              'horavolta TEXT NOT NULL,',
+              'periodo TEXT NOT NULL'
+    ]
+    banco.lista(tabela)
+    banco.criar_sql('registro')
+    banco.criar_schema()
 
