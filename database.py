@@ -42,14 +42,13 @@ class Banco:
                 arquivo.write(f'{i}\n')
             arquivo.write('\n);')
 
-    def criar_schema(self,):
+    def criar_schema(self, ):
         try:
             with open(f'sql/{self.tabela_nome}.sql', 'rt') as sql:
                 schema = sql.read()
                 self.db.cursor.executescript(schema)
         except sqlite3.OperationalError:
             print('A tabela já existe')
-
 
 
 if __name__ == '__main__':
@@ -59,8 +58,7 @@ if __name__ == '__main__':
               'datavolta TEXT NOT NULL,',
               'horavolta TEXT NOT NULL,',
               'periodo TEXT NOT NULL'
-    ]
+              ]
     banco.lista(tabela)
     banco.criar_sql('registro')
     banco.criar_schema()
-
