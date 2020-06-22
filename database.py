@@ -10,14 +10,20 @@ def apagar(path):
 
 def criar_sql(sql, tabela_nome: str, opcao: str ='inserir'.lower()) ->str:
     if opcao == 'criar':
+
         with open(f'sql/{tabela_nome}.sql', 'w') as arquivo:
             arquivo.write(f'CREATE TABLE IF NOT EXISTS {tabela_nome}(\n')
+            virgula = len(sql)
+            cont = 1
             for i in sql:
-                arquivo.write(f'{i}\n')
+                if cont == virgula:
+                    arquivo.write(f'{i} ')
+                else:
+                    arquivo.write(f'{i}, ')
+                cont += 1
             arquivo.write('\n);')
         with open(f'sql/{tabela_nome}.sql', 'rt') as sql:
             schema = sql.read()
-        apagar(tabela_nome)
         return schema
     elif opcao == 'inserir':
         with open(f'sql/{tabela_nome}.sql', 'w') as arquivo:
@@ -90,6 +96,13 @@ class Banco:
 
 if __name__ == '__main__':
     banco = Banco('db/registro')
+    tabela = ['dataqueda TEXT NOT NULL',
+              'horaqueda TEXT NOT NULL',
+              'datavolta TEXT NOT NULL',
+              'horavolta TEXT NOT NULL',
+              'periodo TEXT NOT NULL']
+    tabela = criar_sql(sql=tabela, tabela_nome='registro', opcao='criar')
+    banco.criar_schema(tabela)
 
     tabela = {'dataqueda': '10/08/2020', 'horaqueda': '05:00:00', 'datavolta': '10/08/2020', 'horavolta' : '05:04:00', 'periodo': '00:04:00'}
     tabela = criar_sql(tabela, 'registro', 'inserir')
