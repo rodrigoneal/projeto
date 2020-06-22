@@ -2,13 +2,14 @@ import os
 from random import randint
 import sqlite3
 
+
 def apagar(path):
     dir = '/Users/rodrgo/PycharmProjects/projeto/sql'
     os.remove(f'{dir}/{path}.sql')
 
 
-def criar_sql(sql, tabela_nome, opcao = 2):
-    if opcao == 1:
+def criar_sql(sql, tabela_nome: str, opcao: str ='inserir'.lower()) ->str:
+    if opcao == 'criar':
         with open(f'sql/{tabela_nome}.sql', 'w') as arquivo:
             arquivo.write(f'CREATE TABLE IF NOT EXISTS {tabela_nome}(\n')
             for i in sql:
@@ -18,7 +19,7 @@ def criar_sql(sql, tabela_nome, opcao = 2):
             schema = sql.read()
         apagar(tabela_nome)
         return schema
-    elif opcao == 2:
+    elif opcao == 'inserir':
         with open(f'sql/{tabela_nome}.sql', 'w') as arquivo:
             arquivo.write(f'INSERT INTO {tabela_nome} (')
             virgula = len(sql)
@@ -43,7 +44,6 @@ def criar_sql(sql, tabela_nome, opcao = 2):
             schema = sql.read()
 
         return schema
-
 
 
 class Connect:
@@ -78,22 +78,20 @@ class Banco:
         self.db.conn.commit()
 
     def criar_schema(self, schema, opcao=1):
+
         if opcao == 2:
+
             self.db.cursor.executescript(schema)
             self.commit()
+
         else:
             self.db.cursor.executescript(schema)
 
 
 if __name__ == '__main__':
-   banco = Banco('db/registro')
-   tabela = ['dataqueda TEXT NOT NULL,',
-              'horaqueda DATETIME NOT NULL,',
-              'datavolta TEXT NOT NULL,',
-              'horavolta TEXT NOT NULL,',
-              'periodo TEXT NOT NULL'
-              ]
-   b = criar_sql(tabela, 'registro', 1)
-   print(b)
-   banco.criar_schema(b)
+    banco = Banco('db/registro')
 
+    tabela = {'dataqueda': '10/08/2020', 'horaqueda': '05:00:00', 'datavolta': '10/08/2020', 'horavolta' : '05:04:00', 'periodo': '00:04:00'}
+    tabela = criar_sql(tabela, 'registro', 'inserir')
+
+    banco.criar_schema(tabela, 2)
