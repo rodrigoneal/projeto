@@ -104,7 +104,7 @@ if __name__ == '__main__':
     tabela = criar_sql(sql=tabela, tabela_nome='registro', opcao='criar')
     banco.criar_schema(tabela)
 
-    tabela = {'dataqueda': '10/08/2020', 'horaqueda': '05:00:00', 'datavolta': '10/08/2020', 'horavolta' : '05:04:00', 'periodo': '00:04:00'}
+    tabela = {'dataqueda': '10/08/2020', 'horaqueda': '05:20:00', 'datavolta': '10/08/2020', 'horavolta' : '05:04:00', 'periodo': '00:04:00'}
     tabela = criar_sql(tabela, 'registro', 'inserir')
 
     banco.criar_schema(tabela, 2)
