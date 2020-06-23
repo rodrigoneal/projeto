@@ -11,6 +11,11 @@ def darwin():
     ip = gateway.replace(' ', '')[start:end]
     return ip
 
+def windows():
+    gateway = subprocess.getoutput('ipconfig')
+    ip = (gateway.replace(' ', '').split(':')[-1])
+    return ip
+
 
 def data_hora() -> tuple:
     """
@@ -34,13 +39,17 @@ Verifica se o computador está conectado a alguma rede
     """
     sistema = platform.system()
     if sistema == 'Darwin':
-        proc = subprocess.getoutput('route get default | grep gateway')
-    proc = subprocess.getoutput('ipconfig')
-    a = proc.strip().split(':')[-1].strip()
-    if a[0].isdigit():
-        return True
-    else:
-        return False
+        gateway = darwin()
+        if gateway:
+            return True
+        else:
+            return False
+    if sistema == 'Windows':
+        gateway = windows()
+        if gateway:
+            return True
+        else:
+            return False
 
 
 def perda_dados(ip: str = '8.8.8.8', eco: str = '8') -> str:
@@ -84,5 +93,6 @@ class Core:
 
 
 if __name__ == '__main__':
-    a = status_conexao()
+    core = Core()
+    a = core.requisicao()
     print(a)

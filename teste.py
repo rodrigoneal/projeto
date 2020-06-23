@@ -1,7 +1,7 @@
 from database.core_db import Manipular_sql
 from database.database import Banco
 from gerador import data, hora
-from time import sleep
+
 
 from dateutil import parser
 banco = Banco('teste')
@@ -43,5 +43,5 @@ banco.criar_schema(tabela, 2)
 sql = 'dataqueda'
 tabela = teste.select_sql(sql)
 a = banco.ler_schema(tabela)
-print(len(a))
+print(a)
 

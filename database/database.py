@@ -1,6 +1,8 @@
 import sqlite3
+import os
 
-caminho = '/Users/rodrgo/PycharmProjects/projeto/database/db'
+caminho = os.path.dirname(__file__)+'/db'
+
 
 class Connect:
 

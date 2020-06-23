@@ -1,8 +1,9 @@
 import os
+import platform
 
 
 class Manipular_sql:
-    pasta = '/Users/rodrgo/PycharmProjects/projeto/database/sql'
+    pasta = os.path.dirname(__file__)+'/sql'
 
     def __init__(self, nome_da_tabela: str):
         self.nome = nome_da_tabela
