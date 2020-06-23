@@ -40,7 +40,8 @@ Verifica se o computador está conectado a alguma rede
     sistema = platform.system()
     if sistema == 'Darwin':
         gateway = darwin()
-        if gateway:
+        conf = gateway[0].isnumeric()
+        if conf:
             return True
         else:
             return False
@@ -93,6 +94,5 @@ class Core:
 
 
 if __name__ == '__main__':
-    core = Core()
-    a = core.requisicao()
-    print(a)
+    status = status_conexao()
+    print(status)
