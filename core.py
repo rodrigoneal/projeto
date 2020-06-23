@@ -6,9 +6,9 @@ import platform
 
 def darwin():
     gateway = subprocess.getoutput('netstat -nr | grep default')
-    start = a.replace(' ', '').find('t') + 1
-    end = a.replace(' ', '').find('G') - 1
-    ip = a.replace(' ', '')[start:end]
+    start = gateway.replace(' ', '').find('t') + 1
+    end = gateway.replace(' ', '').find('G') - 1
+    ip = gateway.replace(' ', '')[start:end]
     return ip
 
 
