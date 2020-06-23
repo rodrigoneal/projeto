@@ -59,5 +59,5 @@ class Manipular_sql:
     def select_sql(self, sql: str) -> str:
         with open(self.tabela, 'w') as arquivo:
             arquivo.write(f'SELECT {sql} FROM {self.nome}')
-            leitura = self.ler_sql()
+        leitura = self.ler_sql()
         return leitura
