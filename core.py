@@ -1,10 +1,18 @@
 from datetime import datetime
 from requests import get
 import subprocess
+import platform
 
 
+def darwin():
+    gateway = subprocess.getoutput('netstat -nr | grep default')
+    start = a.replace(' ', '').find('t') + 1
+    end = a.replace(' ', '').find('G') - 1
+    ip = a.replace(' ', '')[start:end]
+    return ip
 
-def data_hora() -> tuple[str, str]:
+
+def data_hora() -> tuple:
     """
 Converte a data e hora para o formato brasileiro
     :return: data e hora
@@ -24,6 +32,9 @@ Verifica se o computador está conectado a alguma rede
     :return: True se estiver conectado
     :return: False se não estiver
     """
+    sistema = platform.system()
+    if sistema == 'Darwin':
+        proc = subprocess.getoutput('route get default | grep gateway')
     proc = subprocess.getoutput('ipconfig')
     a = proc.strip().split(':')[-1].strip()
     if a[0].isdigit():
@@ -32,14 +43,13 @@ Verifica se o computador está conectado a alguma rede
         return False
 
 
-def perda_dados(ip: str ='8.8.8.8', eco: str ='8') -> str:
+def perda_dados(ip: str = '8.8.8.8', eco: str = '8') -> str:
     """
     Verifica o valor de perda de dados da conexão
     :param ip: ip do servidor que deseja pingar
     :param eco: numero de tentativa de conexão
     :return: O valor de perda de dados
     """
-
 
     proc = subprocess.getoutput('ping ' + ip + ' -n ' + eco)
     parente = proc.find('(') + 1
@@ -73,3 +83,6 @@ class Core:
                 print("Verifique se você está conectado a alguma rede")
 
 
+if __name__ == '__main__':
+    a = status_conexao()
+    print(a)
