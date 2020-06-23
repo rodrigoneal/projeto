@@ -1,5 +1,6 @@
 import sqlite3
-import core_db
+import os
+from core_db import inserir_sql, criar_sql, select_sql
 conn = sqlite3.connect('registro.db')
 
 
@@ -44,18 +45,33 @@ class Banco:
         else:
             self.db.cursor.executescript(schema)
 
+    def ler_schema(self, schema):
+        self.db.cursor.execute(schema)
+        resultado = self.db.cursor.fetchall()
+        return resultado
+
+
+
 
 if __name__ == '__main__':
     banco = Banco('registro')
+    """
     tabela = ['dataqueda TEXT NOT NULL',
               'horaqueda TEXT NOT NULL',
               'datavolta TEXT NOT NULL',
               'horavolta TEXT NOT NULL',
               'periodo TEXT NOT NULL']
-    criar = core_db
-    tabela = criar.criar_sql(sql=tabela, tabela_nome='registro', opcao='criar')
+
+    tabela = criar_sql(sql=tabela, tabela_nome='registro')
     print(tabela)
     banco.criar_schema(tabela)
-    tabela = {'dataqueda': '10/08/2020', 'horaqueda': '05:00:00', 'datavolta': '10/08/2020', 'horavolta': '05:04:00', 'periodo': '00:04:00'}
-    tabela = criar.criar_sql(tabela, 'registro', 'inserir')
-    banco.criar_schema(tabela, 2)
+    tabela = {'dataqueda': '10/08/2020', 'horaqueda': '05:20:00', 'datavolta': '10/08/2020', 'horavolta': '05:04:00', 'periodo': '00:04:00'}
+    tabela = inserir_sql(tabela, 'registro')
+    print(tabela)
+    banco.criar_schema(tabela, 2)"""
+    sql = {'dataqueda':'registro'}
+
+    a = select_sql(sql, 'registro')
+    print(a)
+    b = banco.ler_schema(a)
+    print(b)

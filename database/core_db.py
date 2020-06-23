@@ -1,32 +1,37 @@
 import os
 
+pasta = '/Users/rodrgo/PycharmProjects/projeto/database/sql'
 
-@property
+
 def _apagar(path):
-    dir = '/Users/rodrgo/PycharmProjects/projeto/sql'
-    os.remove(f'{dir}/{path}.sql')
+    os.remove(f'{pasta}/{path}.sql')
 
 
-def criar_sql(sql, tabela_nome: str) ->str:
-        with open(f'sql/{tabela_nome}.sql', 'w') as arquivo:
-            virgula = len(sql)
-            cont = 1
-            arquivo.write(f'CREATE TABLE IF NOT EXISTS {tabela_nome}(\n')
-            for i in sql:
-                if cont == virgula:
-                    arquivo.write(f'{i}\n')
-                else:
-                    arquivo.write(f'{i},\n')
-                cont += 1
-            arquivo.write('\n);')
-            with open(f'sql/{tabela_nome}.sql', 'rt') as sql:
-                schema = sql.read()
-            _apagar(tabela_nome)
-            return schema
+def ler_sql(tabela_nome):
+    with open(f'{pasta}/{tabela_nome}.sql', 'rt') as sql:
+        schema = sql.read()
+        _apagar(tabela_nome)
+        return schema
 
 
-def inserir_sql(sql: str, tabela_nome: str):
-    with open(f'sql/{tabela_nome}.sql', 'w') as arquivo:
+def criar_sql(sql, tabela_nome: str) -> str:
+    with open(f'{pasta}/{tabela_nome}.sql', 'w') as arquivo:
+        virgula = len(sql)
+        cont = 1
+        arquivo.write(f'CREATE TABLE IF NOT EXISTS {tabela_nome}(\n')
+        for i in sql:
+            if cont == virgula:
+                arquivo.write(f'{i}\n')
+            else:
+                arquivo.write(f'{i},\n')
+            cont += 1
+        arquivo.write('\n);')
+    leitura = ler_sql(tabela_nome)
+    return leitura
+
+
+def inserir_sql(sql: str, tabela_nome: str) -> str:
+    with open(f'{pasta}/{tabela_nome}.sql', 'w') as arquivo:
         arquivo.write(f'INSERT INTO {tabela_nome} (')
         virgula = len(sql)
         cont = 1
@@ -46,7 +51,19 @@ def inserir_sql(sql: str, tabela_nome: str):
             else:
                 arquivo.write(f'"{sql[i]}", ')
             cont += 1
-    with open(f'sql/{tabela_nome}.sql', 'rt') as sql:
-        schema = sql.read()
-    _apagar(tabela_nome)
-    return schema
+    leitura = ler_sql(tabela_nome)
+    return leitura
+
+
+def select_sql(sql: str, tabela_nome: str) -> str:
+    valor = ''
+    with open(f'{pasta}/{tabela_nome}.sql', 'w') as arquivo:
+        arquivo.write(f'SELECT ')
+        for i in sql.keys():
+            valor = i
+            arquivo.write(i)
+
+        arquivo.write(f' FROM {sql[valor]}')
+
+    leitura = ler_sql(tabela_nome)
+    return leitura
