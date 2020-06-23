@@ -1,0 +1,1 @@
+INSERT INTO registro (dataqueda, horaqueda, datavolta, horavolta, periodo) Values ("10/08/2020", "05:20:00", "10/08/2020", "05:04:00", "00:04:00"); 
