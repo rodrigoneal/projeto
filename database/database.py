@@ -4,6 +4,7 @@ from core_db import inserir_sql, criar_sql, select_sql
 conn = sqlite3.connect('registro.db')
 
 
+
 class Connect:
 
     def __init__(self, db_name: str):
