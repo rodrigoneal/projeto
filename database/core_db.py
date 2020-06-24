@@ -1,11 +1,16 @@
 import os
 
+try:
+    os.mkdir(os.path.dirname(__file__) + '/sql')
+except:
+    pass
+
 
 class Manipular_sql:
-    pasta = os.path.dirname(__file__) + '/sql'
 
     def __init__(self, nome_da_tabela: str):
         self.nome = nome_da_tabela
+        self.pasta = os.path.dirname(__file__) + '/sql'
         self.tabela = f'{self.pasta}/{nome_da_tabela}.sql'
 
     def _apagar(self):

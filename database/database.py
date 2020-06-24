@@ -1,6 +1,9 @@
 import sqlite3
 import os
-
+try:
+    os.mkdir(os.path.dirname(__file__) + '/db')
+except:
+    pass
 caminho = os.path.dirname(__file__)+'/db'
 
 

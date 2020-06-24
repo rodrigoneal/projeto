@@ -17,7 +17,6 @@ def data():
         mes2 = randint(0, 9)
     mes = int(f'{mes1}{mes2}')
 
-
     # Gerador de dia
     dia1 = randint(0, 3)
     if dia1 == 3:
@@ -51,23 +50,16 @@ def hora():
        Gera um str de hora aleatoria para testar o banco de dados
        :return: um str com hora aleatoria
        """
-    cont = 0
-    while True:
-        hora1 = randint(0, 2)
-        if hora1 == 2:
-            hora2 = randint(0, 3)
-        else:
-            hora2 = randint(0, 9)
+    hora1 = randint(0, 2)
+    if hora1 == 2:
+        hora2 = randint(0, 3)
+    else:
+        hora2 = randint(0, 9)
 
+    minuto1 = randint(0, 5)
+    minuto2 = randint(0, 9)
 
+    segundo1 = randint(0, 5)
+    segundo2 = randint(0, 9)
 
-        minuto1 = randint(0, 5)
-        minuto2 = randint(0, 9)
-
-        segundo1 = randint(0, 5)
-        segundo2 = randint(0, 9)
-
-        return f'{hora1}{hora2}:{minuto1}{minuto2}:{segundo1}{segundo2}'
-
-
-
+    return f'{hora1}{hora2}:{minuto1}{minuto2}:{segundo1}{segundo2}'
