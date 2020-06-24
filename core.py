@@ -3,8 +3,13 @@ from requests import get
 import subprocess
 import platform
 
+_sistema = platform.system()
 
 def darwin():
+    """
+    Comando para pegar o gateway do MacOs
+    :return: ip da gateway
+    """
     gateway = subprocess.getoutput('netstat -nr | grep default')
     start = gateway.replace(' ', '').find('t') + 1
     end = gateway.replace(' ', '').find('G') - 1
@@ -12,9 +17,21 @@ def darwin():
     return ip
 
 def windows():
+    """
+       Comando para pegar o gateway do Windows
+       :return: ip da gateway
+       """
     gateway = subprocess.getoutput('ipconfig')
     ip = (gateway.replace(' ', '').split(':')[-1])
     return ip
+
+def linux():
+    """
+       Comando para pegar o gateway do Linux
+       PS: preciso instalar o sistema para testar os comandos.
+       :return: ip da gateway
+       """
+    pass
 
 
 def data_hora() -> tuple:
@@ -37,15 +54,15 @@ Verifica se o computador está conectado a alguma rede
     :return: True se estiver conectado
     :return: False se não estiver
     """
-    sistema = platform.system()
-    if sistema == 'Darwin':
+    if _sistema == 'Darwin':
         gateway = darwin()
         conf = gateway[0].isnumeric()
         if conf:
             return True
         else:
             return False
-    if sistema == 'Windows':
+    if _sistema == 'Windows':
+        print(_sistema)
         gateway = windows()
         if gateway:
             return True
@@ -60,13 +77,21 @@ def perda_dados(ip: str = '8.8.8.8', eco: str = '8') -> str:
     :param eco: numero de tentativa de conexão
     :return: O valor de perda de dados
     """
+    if _sistema == 'Windows':
+        proc = subprocess.getoutput('ping ' + ip + ' -n ' + eco)
+        start = proc.find('(') + 1
+        end = proc.find('%') + 1
+        ip = proc[start:end]
+        if not end:
+            raise ('IP informado é invalido')
+        return ip
+    else:
+        proc = subprocess.getoutput('ping ' + ip + ' -c ' + eco)
+        start = proc.find('ived') + 4
+        end = proc.find('%') + 1
+        ip = proc[start:end].replace(',','').rstrip().strip()
+        return ip
 
-    proc = subprocess.getoutput('ping ' + ip + ' -n ' + eco)
-    parente = proc.find('(') + 1
-    porc = proc.find('%') + 1
-    if not parente:
-        raise ('IP informado é invalido')
-    return proc[parente:porc]
 
 
 class Core:
@@ -94,5 +119,5 @@ class Core:
 
 
 if __name__ == '__main__':
-    status = status_conexao()
+    status = perda_dados()
     print(status)

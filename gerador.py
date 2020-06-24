@@ -1,7 +1,12 @@
 from random import randint
+from time import sleep
 
 
 def data():
+    """
+    Gera um data de data aleatoria para testar o banco de dados
+    :return: um str com data aleatoria
+    """
     # Gerador de Mês
     mes1 = randint(0, 1)
     if mes1 == 1:
@@ -24,16 +29,16 @@ def data():
     dia = int(f'{dia1}{dia2}')
     if mes == 2 and dia > 28:
         dia = 28
-        return f'{dia}/{mes}/2020'
+        return f'{dia}/0{mes}/2020'
     elif mes == 4 and dia > 30:
         dia = 30
-        return f'{dia}/{mes}/2020'
+        return f'{dia}/0{mes}/2020'
     elif mes == 6 and dia > 30:
         dia = 30
-        return f'{dia}/{mes}/2020'
+        return f'{dia}/0{mes}/2020'
     elif mes == 9 and dia > 30:
         dia = 30
-        return f'{dia}/{mes}/2020'
+        return f'{dia}/0{mes}/2020'
     elif mes == 11 and dia > 30:
         dia = 30
         return f'{dia}/{mes}/2020'
@@ -42,6 +47,10 @@ def data():
 
 
 def hora():
+    """
+       Gera um str de hora aleatoria para testar o banco de dados
+       :return: um str com hora aleatoria
+       """
     cont = 0
     while True:
         hora1 = randint(0, 2)
@@ -59,4 +68,6 @@ def hora():
         segundo2 = randint(0, 9)
 
         return f'{hora1}{hora2}:{minuto1}{minuto2}:{segundo1}{segundo2}'
+
+
 
