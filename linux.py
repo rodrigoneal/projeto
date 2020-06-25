@@ -1,4 +1,7 @@
-import subprocess
+from database.core_db import Manipular_sql
+from database.database import Banco
+from etc import calendario
 
-a = subprocess.getstatusoutput('route')
-print(a)
+banco = Banco('teste')
+manipular = Manipular_sql('datas')
+calendario = calendario.meses
