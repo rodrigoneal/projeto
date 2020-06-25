@@ -1,36 +1,15 @@
-from database.database import Banco
-from gerador import data, hora
-from database.core_db import Manipular_sql
-
-from dateutil import parser
-
-banco = Banco('teste')
-
-tabela = ['id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL',
-          'dataqueda TEXT NOT NULL',
-          'horaqueda TEXT NOT NULL',
-          'datavolta TEXT NOT NULL',
-          'horavolta TEXT NOT NULL',
-          'periodo TEXT NOT NULL']
-teste = Manipular_sql('teste')
-tabela = teste.criar_tabela_sql(tabela)
-
-banco.commitar_schema(tabela)
-
-data1 = data()
-data2 = data()
-hora1 = hora()
-hora2 = hora()
-
-converte1 = parser.parse(f'{data1} {hora1}')
-converte2 = parser.parse(f'{data2} {hora2}')
-periodo = str(converte1 - converte2)
-
-tabela = {'dataqueda': f'{data1}', 'horaqueda': f'{hora1}', 'datavolta': f'{data2}', 'horavolta': f'{hora2}',
-          'periodo': f'{periodo}'}
-
-tabela = teste.criar_inserir_sql(tabela)
-
-banco.commitar_schema(tabela, 2)
+from core import Core
+from inicializador import criar_tabelas
 
 
+inicializar = criar_tabelas()
+core = Core()
+requisicao = core.requisicao()
+
+if __name__ == '__main__':
+    while True:
+        requisicao = core.requisicao()
+        if requisicao[0]:
+            mes = requisicao[1][3:5]
+            print(mes)
+    # Todo: criar uma função para simplificar a inserção no banco de dados
