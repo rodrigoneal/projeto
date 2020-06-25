@@ -5,7 +5,7 @@ import platform
 
 _sistema = platform.system()
 
-def darwin():
+def _darwin():
     """
     Comando para pegar o gateway do MacOs
     :return: ip da gateway
@@ -16,7 +16,7 @@ def darwin():
     ip = gateway.replace(' ', '')[start:end]
     return ip
 
-def windows():
+def _windows():
     """
        Comando para pegar o gateway do Windows
        :return: ip da gateway
@@ -25,7 +25,7 @@ def windows():
     ip = (gateway.replace(' ', '').split(':')[-1])
     return ip
 
-def linux():
+def _linux():
     """
        Comando para pegar o gateway do Linux
        PS: preciso instalar o sistema para testar os comandos.
@@ -34,9 +34,9 @@ def linux():
     pass
 
 
-def data_hora() -> tuple:
+def _data_hora() -> tuple:
     """
-Converte a data e hora para o formato brasileiro
+    Converte a data e hora para o formato brasileiro
     :return: data e hora
     """
     agora = datetime.now()
@@ -48,14 +48,14 @@ Converte a data e hora para o formato brasileiro
 
 def status_conexao() -> bool:
     """
-Verifica se o computador está conectado a alguma rede
+    Verifica se o computador está conectado a alguma rede
 
 
     :return: True se estiver conectado
     :return: False se não estiver
     """
     if _sistema == 'Darwin':
-        gateway = darwin()
+        gateway = _darwin()
         conf = gateway[0].isnumeric()
         if conf:
             return True
@@ -63,7 +63,7 @@ Verifica se o computador está conectado a alguma rede
             return False
     if _sistema == 'Windows':
         print(_sistema)
-        gateway = windows()
+        gateway = _windows()
         if gateway:
             return True
         else:
@@ -104,8 +104,8 @@ class Core:
         :returns: Data e hora da requisição
         """
         urls = 'http://google.com'
-        data = data_hora()[0]
-        hora = data_hora()[1]
+        data = _data_hora()[0]
+        hora = _data_hora()[1]
         try:
             status = get(urls, timeout=5)
             if status:
