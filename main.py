@@ -13,24 +13,24 @@ tabela = ['id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL',
           'horavolta TEXT NOT NULL',
           'periodo TEXT NOT NULL']
 teste = Manipular_sql('teste')
-tabela = teste.criar_sql(tabela)
+tabela = teste.criar_tabela_sql(tabela)
 
-banco.criar_schema(tabela)
-while True:
-    data1 = data()
-    data2 = data()
-    hora1 = hora()
-    hora2 = hora()
+banco.commitar_schema(tabela)
 
-    converte1 = parser.parse(f'{data1} {hora1}')
-    converte2 = parser.parse(f'{data2} {hora2}')
-    periodo = str(converte1 - converte2)
+data1 = data()
+data2 = data()
+hora1 = hora()
+hora2 = hora()
 
-    tabela = {'dataqueda': f'{data1}', 'horaqueda': f'{hora1}', 'datavolta': f'{data2}', 'horavolta': f'{hora2}',
-              'periodo': f'{periodo}'}
-    print(tabela)
-    tabela = teste.inserir_sql(tabela)
+converte1 = parser.parse(f'{data1} {hora1}')
+converte2 = parser.parse(f'{data2} {hora2}')
+periodo = str(converte1 - converte2)
 
-    banco.criar_schema(tabela, 2)
+tabela = {'dataqueda': f'{data1}', 'horaqueda': f'{hora1}', 'datavolta': f'{data2}', 'horavolta': f'{hora2}',
+          'periodo': f'{periodo}'}
+
+tabela = teste.criar_inserir_sql(tabela)
+
+banco.commitar_schema(tabela, 2)
 
 
