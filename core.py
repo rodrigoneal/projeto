@@ -62,7 +62,6 @@ def status_conexao() -> bool:
         else:
             return False
     if _sistema == 'Windows':
-        print(_sistema)
         gateway = _windows()
         if gateway:
             return True
@@ -117,7 +116,3 @@ class Core:
             else:
                 print("Verifique se você está conectado a alguma rede")
 
-
-if __name__ == '__main__':
-    status = perda_dados()
-    print(status)
