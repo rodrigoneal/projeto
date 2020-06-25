@@ -20,7 +20,7 @@ class Manipular_sql:
         """
         os.remove(f'{self.pasta}/{self.nome}.sql')
 
-    def ler_sql(self):
+    def _ler_sql(self):
         """
         Abre um arquivo SQL para usar no banco
 
@@ -31,17 +31,19 @@ class Manipular_sql:
         self._apagar()
         return schema
 
-    def criar_sql(self, sql) -> str:
+    def criar_tabela_sql(self, sql:list, nome_tabela:str = None) -> str:
         """
         Formata um arquivo str e gera um arquivo SQL para criação de uma
         tabela de dados.
         :param sql: str para formatar um SQL
         :return: str formatado para criação de uma tabela SQL
         """
+        if not nome_tabela:
+            nome_tabela = self.nome
         with open(self.tabela, 'w') as arquivo:
             virgula = len(sql)
             cont = 1
-            arquivo.write(f'CREATE TABLE IF NOT EXISTS {self.nome}(\n')
+            arquivo.write(f'CREATE TABLE IF NOT EXISTS {nome_tabela}(\n')
             for i in sql:
                 if cont == virgula:
                     arquivo.write(f'{i}\n')
@@ -49,10 +51,10 @@ class Manipular_sql:
                     arquivo.write(f'{i},\n')
                 cont += 1
             arquivo.write('\n);')
-        leitura = self.ler_sql()
+        leitura = self._ler_sql()
         return leitura
 
-    def inserir_sql(self, sql: str) -> str:
+    def criar_inserir_sql(self, sql: dict, nome_tabela: str = None) -> str:
         """
         Formata um arquivo SQL para insert no banco
 
@@ -60,8 +62,10 @@ class Manipular_sql:
         :param sql: str para formatar um arquivo SQL
         :return: str com o comando SQl para insert já formatado
         """
+        if not nome_tabela:
+            nome_tabela = self.nome
         with open(self.tabela, 'w') as arquivo:
-            arquivo.write(f'INSERT INTO {self.nome} (')
+            arquivo.write(f'INSERT INTO {nome_tabela} (')
             virgula = len(sql)
             cont = 1
             for i in sql:
@@ -80,16 +84,18 @@ class Manipular_sql:
                 else:
                     arquivo.write(f'"{sql[i]}", ')
                 cont += 1
-        leitura = self.ler_sql()
+        leitura = self._ler_sql()
         return leitura
 
-    def select_sql(self, sql: str) -> str:
+    def criar_select_sql(self, sql: str, nome_tabela:str=None) -> str:
         """
         Formata um arquivo de str para um SQL de consulta no banco
         :param sql: str para formatar em um arquivo SQL
         :return: str formatado para consultara um banco
         """
+        if not nome_tabela:
+            nome_tabela = self.nome
         with open(self.tabela, 'w') as arquivo:
-            arquivo.write(f'SELECT {sql} FROM {self.nome}')
-        leitura = self.ler_sql()
+            arquivo.write(f'SELECT {sql} FROM {nome_tabela}')
+        leitura = self._ler_sql()
         return leitura

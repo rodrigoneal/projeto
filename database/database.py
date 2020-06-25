@@ -38,7 +38,7 @@ class Banco:
     def commit(self):
         self.db.conn.commit()
 
-    def criar_schema(self, schema, opcao=1):
+    def commitar_schema(self, schema:list, opcao:int =1)-> None:
 
         if opcao == 2:
 
@@ -48,7 +48,7 @@ class Banco:
         else:
             self.db.cursor.executescript(schema)
 
-    def ler_schema(self, schema):
+    def ler_schema(self, schema: str)->list:
         self.db.cursor.execute(schema)
-        resultado = self.db.cursor.fetchall()
-        return resultado
+        resp = self.db.cursor.fetchall()
+        return resp
