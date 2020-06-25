@@ -31,24 +31,24 @@ class Banco:
     def __init__(self, db_name):
         self.db_name = db_name
         self.db = Connect(db_name)
+        self.conn = self.db.conn
+        self.cursor = self.conn.cursor()
+        self.conn.commit()
 
-    def close_connection(self):
-        self.db.close_db()
 
-    def commit(self):
-        self.db.conn.commit()
+    def executar_schema(self, sql: str) -> list:
+        """
+        Executa um comando SQL para criação ou inserção
 
-    def commitar_schema(self, schema:list, opcao:int =1)-> None:
+        :param: sql: comando que será executado pelo sqlite3
+        """
+        self.cursor.execute(sql)
+        self.conn.commit()
 
-        if opcao == 2:
-
-            self.db.cursor.executescript(schema)
-            self.commit()
-
+        resp = self.cursor.fetchall()
+        if resp:
+            return resp
         else:
-            self.db.cursor.executescript(schema)
+            return None
 
-    def ler_schema(self, schema: str)->list:
-        self.db.cursor.execute(schema)
-        resp = self.db.cursor.fetchall()
-        return resp
+
