@@ -1,10 +1,11 @@
-import sqlite3
 import os
+import sqlite3
+
 try:
     os.mkdir(os.path.dirname(__file__) + '/db')
 except:
     pass
-caminho = os.path.dirname(__file__)+'/db'
+caminho = os.path.dirname(__file__) + '/db'
 
 
 class Connect:
@@ -35,7 +36,6 @@ class Banco:
         self.cursor = self.conn.cursor()
         self.conn.commit()
 
-
     def executar_schema(self, sql: str) -> list:
         """
         Executa um comando SQL para criação ou inserção
@@ -50,5 +50,3 @@ class Banco:
             return resp
         else:
             return None
-
-

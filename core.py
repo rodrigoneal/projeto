@@ -107,8 +107,7 @@ class Core:
         hora = _data_hora()[1]
         try:
             status = get(urls, timeout=5)
-            if status:
-                return True, data, hora
+            return True, data, hora
         except:
             estado = status_conexao()
             if estado:
