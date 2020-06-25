@@ -40,6 +40,7 @@ class Manipular_sql:
         """
         if not nome_tabela:
             nome_tabela = self.nome
+
         with open(self.tabela, 'w') as arquivo:
             virgula = len(sql)
             cont = 1
