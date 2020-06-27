@@ -11,8 +11,13 @@ def periodo(queda, volta):
     periodo = (volta_parse - queda_parse)
     return periodo
 
-def inserir(dados:dict):
-    manipular = Manipular_sql('registro')
+def inserir(dados:dict, nome_da_tabela):
+    manipular = Manipular_sql(nome_da_tabela)
     inserir = manipular.criar_inserir_sql(dados)
     banco = Banco('dados')
     banco.executar_schema(inserir)
+
+
+
+
+

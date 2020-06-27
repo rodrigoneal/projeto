@@ -106,7 +106,7 @@ class Core:
         data = _data_hora()[0]
         hora = _data_hora()[1]
         try:
-            status = get(urls, timeout=5)
+            get(urls, timeout=5)
             return True, data, hora
         except:
             estado = status_conexao()
@@ -114,4 +114,5 @@ class Core:
                 return False, data, hora
             else:
                 print("Verifique se você está conectado a alguma rede")
+                return 3
 
