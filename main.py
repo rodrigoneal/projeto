@@ -1,16 +1,18 @@
 from core import Core
 from inicializar_tabelas import criar_tabelas
-from etc.carga_banco import periodo, inserir
-from etc.speed import speed
-from etc.calendario import desconto
+from etc.registro_queda import periodo, registro
+from etc.desconto import inserir_desconto
+from etc.speed import inserir_speed
 from time import sleep
 
 core = Core()
+criar_tabelas()
 queda = ''
 volta = ''
 if __name__ == '__main__':
     while True:
         requisicao = core.requisicao()
+        sleep(1)
         print(requisicao)
         try:
             if not requisicao[0] or not requisicao[0] == None:
@@ -26,25 +28,12 @@ if __name__ == '__main__':
                 print('internet voltou')
                 volta = requisicao[1:]
                 tempo_sem = periodo(queda, volta)
-
                 if str(tempo_sem) == '0:00:00':
                     break
                 else:
-                    desconto = desconto()
-                    sql = {'data_queda':queda[0],'hora_queda':queda[1],
-                               'data_volta':volta[0],'hora_volta':volta[1],
-                               'tempo_sem':str(tempo_sem)}
-
-                    inserir(sql, 'registro')
+                    inserir_desconto(queda[0], tempo_sem.total_seconds())
+                    registro(queda, volta)
                     print('Realizando o teste')
-                    speed = speed()
-                    print(speed)
-                    print(type(speed))
-                    inserir(speed, 'testes')
+                    inserir_speed()
                     sleep(10)
-
-
-
-
-
                     break
