@@ -40,7 +40,7 @@ def _data_hora() -> tuple:
     :return: data e hora
     """
     agora = datetime.now()
-    tempo = agora.strftime('%d/%m/%Y, %H:%M:%S').split(',')
+    tempo = agora.strftime('%m/%d/%Y, %H:%M:%S').split(',')
     data = tempo[0]
     hora = tempo[1]
     return (data, hora)
