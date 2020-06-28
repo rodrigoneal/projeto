@@ -8,7 +8,6 @@ def criar_tabelas():
     """
     Função que criar e inicializa as principais tabelas do banco de dados
 
-    :rtype: object
     """
     # Inicializando o banco
 

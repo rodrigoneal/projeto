@@ -1,4 +1,8 @@
 def meses():
+ """
+    calendario com as meses do ano em PT-BR
+ :return:dicionario com o calendario
+ """
  return {'01': 'Janeiro', '02': 'Fevereiro', '03': 'Março',
          '04': 'Abril', '05': 'Maio', '06': 'Junho',
          '07': 'Julho', '08': 'Agosto', '09': 'Setembro',

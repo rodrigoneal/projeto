@@ -25,6 +25,10 @@ def velocidade():
 
 
 def inserir_speed():
+    """
+    Insere os dados da velocidade da internet dentro do banco de
+    dados
+    """
     speed = velocidade()
     inserir_banco = Manipular_sql('qualidade')
     inserir_banco.criar_inserir_sql(speed)
