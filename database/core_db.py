@@ -1,4 +1,5 @@
 import os
+from database.database import Banco
 
 try:
     os.mkdir(os.path.dirname(__file__) + '/sql')
@@ -16,6 +17,7 @@ class Manipular_sql:
 
         :rtype: object
         """
+        self.sql = ''
         self.nome = nome_da_tabela
         self.pasta = os.path.dirname(__file__) + '/sql'
         self.tabela = f'{self.pasta}/{nome_da_tabela}.sql'
@@ -61,8 +63,7 @@ class Manipular_sql:
                     arquivo.write(f'{i},\n')
                 cont += 1
             arquivo.write('\n);')
-        leitura = self._ler_sql()
-        return leitura
+        self.sql = self._ler_sql()
 
     def criar_inserir_sql(self, sql: dict, nome_tabela: str = None) -> str:
         """
@@ -93,8 +94,7 @@ class Manipular_sql:
                 else:
                     arquivo.write(f'"{sql[i]}", ')
                 cont += 1
-        leitura = self._ler_sql()
-        return leitura
+        self.sql = self._ler_sql()
 
     def criar_select_sql(self, sql: str, nome_tabela:str=None) -> str:
         """
@@ -107,5 +107,8 @@ class Manipular_sql:
             nome_tabela = self.nome
         with open(self.tabela, 'w') as arquivo:
             arquivo.write(f'SELECT {sql} FROM {nome_tabela}')
-        leitura = self._ler_sql()
-        return leitura
+        self.sql = self._ler_sql()
+
+    def executar_sql(self):
+        banco = Banco('dados')
+        banco.executar_schema(self.sql)
