@@ -1,5 +1,3 @@
-from database.core_db import Manipular_sql
-
 def meses():
  return {'01': 'Janeiro', '02': 'Fevereiro', '03': 'Março',
          '04': 'Abril', '05': 'Maio', '06': 'Junho',
