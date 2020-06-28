@@ -1,4 +1,11 @@
 import json
+import os
+
+try:
+    os.mkdir(os.path.dirname(__file__) + '/setup.json')
+except:
+    pass
+caminho = os.path.dirname(__file__) + '/setup.json'
 
 
 def escrever_setup(valor: float, download: int, upload: int, operadora: str, game: bool) -> None:
@@ -9,7 +16,7 @@ def escrever_setup(valor: float, download: int, upload: int, operadora: str, gam
     :param upload: velocidade de upload contratada
     :param operadora: nome da operadora de serviço
     """
-    with open('setup/setup.json', 'w') as setup:
+    with open(caminho, 'w') as setup:
         status = {'internet': valor, 'download': download, 'upload': upload, 'operadora': operadora, 'game': game}
         status = json.dumps(status)
         setup.write(status)
@@ -21,9 +28,6 @@ def ler_setup() -> dict:
 
     :return: Um dicionario com os dados do usuario
     """
-    with open('setup/setup.json', 'r') as setup:
+    with open(caminho, 'r') as setup:
         conf = json.load(setup)
         return (conf)
-
-escrever_setup(182.90, 30, 10, 'vigweb', True)
-a = ler_setup()
