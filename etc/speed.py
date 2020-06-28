@@ -1,8 +1,10 @@
 from speedtest import Speedtest
 from core import perda_dados
 from datetime import datetime
+from database.core_db import Manipular_sql
 
-def speed():
+
+def velocidade():
     """
     Realizar um teste na velocidade de download, upload e ping
     :return: uma tupla com velocidade de download, upload e ping
@@ -18,6 +20,12 @@ def speed():
     up = (round(res["upload"] / 1024 / 1024))
     ping = (round(res["ping"]))
     perda = perda_dados()
-    resp = {'download':down, 'upload':up, 'ping': ping, 'perda_pacote':perda, 'atualizado':atualizado}
+    resp = {'download': down, 'upload': up, 'ping': ping, 'perda_pacote': perda, 'atualizado': atualizado}
     return resp
 
+
+def inserir_speed():
+    speed = velocidade()
+    inserir_banco = Manipular_sql('qualidade')
+    inserir_banco.criar_inserir_sql(speed)
+    inserir_banco.executar_sql()
