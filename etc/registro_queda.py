@@ -1,6 +1,7 @@
 from dateutil import parser
 from database.core_db import Manipular_sql
 from types import MemberDescriptorType
+from  inicializar_tabelas import __registro__
 
 
 def periodo(queda: list, volta: list) -> MemberDescriptorType:
@@ -29,6 +30,7 @@ def registro(queda, volta):
     sql = {'data_queda': data_queda, 'hora_queda': hora_queda,
            'data_volta': data_volta, 'hora_volta': hora_volta,
            'tempo_sem': periodo(queda, volta)}
-    manipular = Manipular_sql('registro')
+    manipular = Manipular_sql(__registro__)
     manipular.criar_inserir_sql(sql)
     manipular.executar_sql()
+

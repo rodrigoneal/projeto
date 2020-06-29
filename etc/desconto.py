@@ -1,7 +1,8 @@
-import inicializar_tabelas
+from  inicializar_tabelas import __datas__
 from database.core_db import Manipular_sql
 from setup import setup
-from .calendario import meses
+from etc.calendario import meses
+
 
 
 def desc(tempo_sem: float) -> float:
@@ -27,9 +28,16 @@ def inserir_desconto(data: str, tempo_sem):
     :param tempo_sem: tempo que ficou sem internet
     """
     slice = data[0:2]
-    data_inserir = inicializar_tabelas.__datas__
+    data_inserir = __datas__
     mes = meses()[slice]
     inserir = Manipular_sql(data_inserir)
     desconto = desc(tempo_sem)
     inserir.criar_inserir_sql({mes: desconto})
     inserir.executar_sql()
+
+
+def verificar_desconto(mes:str) -> str:
+    manipular = Manipular_sql(__datas__)
+    manipular.criar_select_sql(mes)
+    resp = manipular.executar_sql()
+    return resp

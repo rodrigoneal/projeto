@@ -111,4 +111,5 @@ class Manipular_sql:
 
     def executar_sql(self):
         banco = Banco('dados')
-        banco.executar_schema(self.sql)
+        resp = banco.executar_schema(self.sql)
+        return resp

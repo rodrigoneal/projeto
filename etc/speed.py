@@ -2,6 +2,7 @@ from speedtest import Speedtest
 from core import perda_dados
 from datetime import datetime
 from database.core_db import Manipular_sql
+from  inicializar_tabelas import __registro__
 
 
 def velocidade():
@@ -30,6 +31,6 @@ def inserir_speed():
     dados
     """
     speed = velocidade()
-    inserir_banco = Manipular_sql('qualidade')
+    inserir_banco = Manipular_sql(__registro__)
     inserir_banco.criar_inserir_sql(speed)
     inserir_banco.executar_sql()
